@@ -1,0 +1,29 @@
+.searchbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.input {
+  padding: 8px 20px;
+  border-bottom-left-radius: 0.75rem;
+  border-top-left-radius: 0.75rem;
+  position: relative;
+  border: none;
+  outline: 1px solid green;
+}
+
+.searchbar button {
+  padding: 8px 10px;
+  border: none;
+  color: #fff;
+  background-color: green;
+  border-bottom-right-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  cursor: pointer;
+}
+
+.none {
+  display: none;
+}

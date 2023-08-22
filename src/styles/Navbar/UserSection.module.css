@@ -1,0 +1,49 @@
+.usuario {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.log {
+  margin-right: 20px;
+  border-radius: 0.5rem;
+}
+
+.in {
+  border: none;
+  border-radius: 0.25rem;
+  color: #fff;
+  background-color: green;
+  padding: 7px 17px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.out {
+  border: none;
+  border-radius: 0.25rem;
+  background: #a52323;
+  color: #fff;
+  padding: 7px 17px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: lowercase;
+}
+.name {
+  display: none;
+}
+
+.usuario img {
+  border-radius: 50px;
+  cursor: pointer;
+  margin-right: 13px;
+}
+@media (min-width: 940px) {
+  .usuario {
+    margin-left: auto;
+  }
+
+  .log {
+    margin-right: 40px;
+  }
+}

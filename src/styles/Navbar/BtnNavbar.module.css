@@ -1,0 +1,60 @@
+.menuBtn hr {
+  border-color: #fff;
+  width: 23px;
+  height: 0.4px;
+}
+
+.menuBtn {
+  position: absolute;
+  top: 17px;
+  right: 20px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menuIcon {
+  display: block;
+
+  width: 25px;
+  height: 2px;
+  background: #fff;
+
+  margin: 0.5rem auto;
+  transition: all 0.2s ease-in-out;
+}
+.open .menuIcon:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.open .menuIcon:nth-child(2) {
+  opacity: 0;
+}
+
+.open .menuIcon:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+@media (min-width: 940px) {
+  .navbar ul {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 20px;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .menuBtn {
+    display: none;
+  }
+}
