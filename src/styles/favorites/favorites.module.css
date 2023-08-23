@@ -1,0 +1,63 @@
+.jogoslist {
+    list-style: none;
+    flex-wrap: wrap;
+    margin: 1em auto;
+    display: flex;
+    gap: 40px;
+    width: 70%;
+  }
+  
+  .jogoslist li {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+  
+    list-style: none;
+  }
+  .jogoslist img {
+    border-radius: 0.5rem;
+  }
+  .jogoslist h4 {
+    margin-bottom: 1.4rem;
+  }
+  .title {
+    margin: 60px auto;
+    text-transform: uppercase;
+  }
+  .link {
+    color: #333;
+    list-style: none;
+    text-decoration: none;
+  
+    text-transform: uppercase;
+    padding: 7px;
+  }
+  .link:hover {
+    background-color: gold;
+    border-radius: 50px;
+  }
+  
+  .container_preco {
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 20px;
+    margin-top: 1rem;
+  }
+  
+  .icons_cart {
+    color: green;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .icons_like {
+    cursor: pointer;
+    color: red;
+    margin-left: 5px;
+  }
