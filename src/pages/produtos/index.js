@@ -1,5 +1,6 @@
+import ProductsListHooks from "@/hooks/Products-Hooks";
 
-import ProductList from "@/hooks/Product-Hooks"
+
 
 const API_URL = 'http://localhost:3000/api/teste';
 
@@ -14,11 +15,11 @@ export async function getStaticProps() {
     };
   }
 
-export default  function ProductPage({products}){
+export default  function ProductsPage({products}){
 
     return (
 
-        <ProductList products={products}/>
+        <ProductsListHooks products={products}/>
 
     )
 }

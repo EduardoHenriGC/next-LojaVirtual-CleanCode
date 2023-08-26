@@ -1,9 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
 import styles from '../../styles/Product/Products.module.css';
-import ProductItem from './ProductItem';
+import Products from './Products';
 
-function ProductListView({ products, favoriteItems, handleCart, handleLikeClick }) {
+function ProductsList({ 
+    products,
+    handleCartClick,
+    handleLikeClick, 
+    HandleModal,
+    modal,
+    selectedItemId }) {
   return (
     <>
       <Head>
@@ -13,16 +19,20 @@ function ProductListView({ products, favoriteItems, handleCart, handleLikeClick 
       <div>
         <h2 className={styles.title}>Lista de produtos</h2>
         <ul className={styles.jogoslist}>
-          {products.map(({ id, nome, imgurl, preco }) => (
-            <ProductItem
+          {products.map(({ id, nome, imgurl, preco,descricao }) => (
+            <Products
               key={id}
               id={id}
               nome={nome}
               imgurl={imgurl}
               preco={preco}
-              isLiked={favoriteItems.some((favItem) => favItem.id === id)}
-              handleCart={handleCart}
+              descricao={descricao}
+              HandleModal={HandleModal}
+              modal={modal}
+              selectedItemId={selectedItemId}
+              handleCartClick={handleCartClick}
               handleLikeClick={handleLikeClick}
+              
             />
           ))}
         </ul>
@@ -31,4 +41,4 @@ function ProductListView({ products, favoriteItems, handleCart, handleLikeClick 
   );
 }
 
-export default ProductListView;
+export default ProductsList;
