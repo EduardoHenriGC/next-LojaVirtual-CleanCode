@@ -1,6 +1,8 @@
-import Favorites from "@/components/favoritos/fav";
+import Favorites from "@/components/favorites/favorites";
 
-export default function Fav(){
+
+
+export default function FavPage(){
 
     return (
 

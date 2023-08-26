@@ -1,3 +1,4 @@
+import FavoritesItem from '@/components/favorites/favoritesItem';
 import { useState, useEffect } from 'react';
 
 function getStoredFavorites() {
@@ -22,5 +23,8 @@ export function FavoritesHooks() {
     removeFavoriteFromLocalStorage(updatedFavorites);
   };
 
-  return { favoriteItems, handleRemoveFavorite };
+  return (
+
+    <FavoritesItem favoriteItems={favoriteItems}  handleRemoveFavorite={handleRemoveFavorite}/>
+  )
 }
