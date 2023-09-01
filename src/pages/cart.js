@@ -1,4 +1,8 @@
-import Cart from "@/components/cart/cart";
+import CartHooks from "@/hooks/Cart-Hooks";
+
+
+
+
 
 
 
@@ -6,6 +10,6 @@ export default function CartPage(){
 
     return (
 
-        <Cart/>
+        <CartHooks/>
     )
 }

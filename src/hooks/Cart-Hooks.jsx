@@ -1,27 +1,45 @@
-import CartItem from '@/components/cart/cartItem';
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
+import CartItem from '@/components/cart/cartItem'; // Importe o componente CartItem
+import { useProductsContext } from '@/context/ProductsContext';
 
-function getStoredCart() {
-  const storedCart = localStorage.getItem('cartItems');
-  return storedCart ? JSON.parse(storedCart) : [];
-}
+export default function CartHooks() {
+  const { handleRemoveCart, cartItems } = useProductsContext();
 
-function removeCartFromLocalStorage(updatedCart) {
-  localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-}
+  // Inicializar o estado quantidades com 1 para cada item no carrinho
+  const initialQuantities = cartItems.reduce((quantities, item) => {
+    quantities[item.id] = 1;
+    return quantities;
+  }, {});
 
-export function CartHooks() {
-  const [cartItems, setCartItems] = useState([]);
+  const [quantidades, setQuantidades] = useState(initialQuantities);
+  const [totalValue, setTotalValue] = useState(0); // Estado para rastrear o valor total
 
+  // Atualizar o valor total sempre que as quantidades mudarem
   useEffect(() => {
-    setCartItems(getStoredCart());
-  }, []);
+    let newTotalValue = 0;
+    cartItems.forEach((item) => {
+      newTotalValue += item.preco * (quantidades[item.id] || 0);
+    });
+    setTotalValue(newTotalValue);
+  }, [quantidades, cartItems]);
 
-  const handleRemoveCart = (id) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedCart);
-    removeCartFromLocalStorage(updatedCart);
-  };
+  // Função para aumentar a quantidade de um item específico
+  function handleAmountMore(id) {
+    setQuantidades((prevQuantidades) => ({
+      ...prevQuantidades,
+      [id]: prevQuantidades[id] + 1,
+    }));
+  }
 
-  return (<CartItem cartItems={cartItems}  handleRemoveCart={handleRemoveCart}/>)
+  // Função para diminuir a quantidade de um item específico
+  function handleAmountLess(id) {
+    if (quantidades[id] > 1) {
+      setQuantidades((prevQuantidades) => ({
+        ...prevQuantidades,
+        [id]: prevQuantidades[id] - 1,
+      }));
+    }
+  }
+
+  return <CartItem handleRemoveCart={handleRemoveCart} cartItems={cartItems} handleAmountMore={handleAmountMore} handleAmountLess={handleAmountLess} quantidades={quantidades} totalValue={totalValue} />;
 }
