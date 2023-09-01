@@ -2,8 +2,8 @@ import React from 'react';
 import { FcLike } from 'react-icons/fc';
 import { BsFillCartCheckFill } from 'react-icons/bs';
 import styles from '../../styles/Product/Products.module.css';
-import ProductItem from '../ProductItem/ProductItem';
-
+import { useProductsContext } from '@/context/ProductsContext';
+import Link from 'next/link';
 
 
 function Products({ 
@@ -12,11 +12,16 @@ function Products({
    imgurl,
    preco, 
    descricao, 
-   handleCartClick,
-   handleLikeClick,
-   HandleModal,
-   modal,
-   selectedItemId }) {
+ }) {
+  
+  const {
+    
+    
+    handleCartClick,
+    handleLikeClick,
+  } = useProductsContext();
+  
+  
   return (
    
     <li key={id}>
@@ -35,21 +40,10 @@ function Products({
           />
         </div>
       </div>
-      <a onClick={() => HandleModal(id)} className={styles.link}>
+      <Link href={`/produtos/${id}`} className={styles.link}>
   Ver mais..
-</a>
-{modal && selectedItemId === id && (
-  <ProductItem
-    id={id}
-    nome={nome}
-    imgurl={imgurl}
-    preco={preco}
-    descricao={descricao}
-    HandleModal={HandleModal}
-    handleCartClick={handleCartClick}
-    handleLikeClick={handleLikeClick}
-  />
-)}
+</Link>
+
 
     </li>
    

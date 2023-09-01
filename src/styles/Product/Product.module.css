@@ -1,28 +1,11 @@
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+.container{
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
-  justify-content: center;
-  align-items: center;
-  }
-
-.modalcontent {
-  
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.container img{
-
-  width: 100%;
-  height: 100%;
-  border-radius: 0.25rem;
+  flex-direction: column;
+  gap: 20px;
+  margin: 100px auto;
 }
 .title{
 
@@ -30,6 +13,8 @@
   justify-content: center;
   align-items: center;
   margin: 50px auto;
+  color: red;
+  
 
 }
 .img{
@@ -93,3 +78,14 @@ width: 300px;
   margin-left: 5px;
   font-size: 20px;
 }
+ @media  (max-width:868px) {
+  
+  .modal{
+    top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  border-radius: 0;
+  }
+ }
