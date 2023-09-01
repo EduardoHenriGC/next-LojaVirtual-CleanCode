@@ -1,25 +1,45 @@
-.jogoslist {
-    list-style: none;
-    flex-wrap: wrap;
-    margin: 1em auto;
-    display: flex;
-    gap: 40px;
-    width: 70%;
+.container{
+
+  margin: 80px auto;
+    width: 80%;
+}
+
+
+.content {
+  display: flex;
+    gap: 15px;
   }
+  .container h2{
+    margin-bottom: 50px;
+}
+
+.containerList{
+    
+  width: 200px;
+}
+
+.containerList h4{
+  margin-bottom: 15px;
+}
+.containerList img{
+
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25rem;
+}
+
+.img{
+  width: 200px;
+  height: 190px;
+}
+
+.container_preco{
+  display: flex;
   
-  .jogoslist li {
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
+  padding: 10px;
+  justify-content: space-around;
   
-    list-style: none;
-  }
-  .jogoslist img {
-    border-radius: 0.5rem;
-  }
+}
   .jogoslist h4 {
     margin-bottom: 1.4rem;
   }
@@ -27,37 +47,27 @@
     margin: 60px auto;
     text-transform: uppercase;
   }
-  .link {
-    color: #333;
-    list-style: none;
-    text-decoration: none;
-  
-    text-transform: uppercase;
-    padding: 7px;
-  }
-  .link:hover {
-    background-color: gold;
-    border-radius: 50px;
-  }
-  
-  .container_preco {
-    display: flex;
-    justify-content: center;
-    justify-content: space-around;
-    color: #444;
-    text-transform: uppercase;
+  .container_preco p{
+    font-weight: 500;
     font-size: 20px;
-    margin-top: 1rem;
-  }
-  
-  .icons_cart {
-    color: green;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-  
-  .icons_like {
-    cursor: pointer;
+    
+
+}
+  .removeButton{
+
     color: red;
-    margin-left: 5px;
-  }
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.containerhandle{
+
+  display: flex;
+  gap: 10px;
+}
+
+.cart{
+  color: green;
+  font-size: 20px;
+  cursor: pointer;
+}

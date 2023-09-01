@@ -9,17 +9,8 @@ export default function NavbarMenu({ toggleList, isOpen }) {
           Produtos
         </Link>
       </li>
-      <li>
-        <Link onClick={toggleList} href="/about">
-          Sobre
-        </Link>
-      </li>
-      <li>
-        <Link onClick={toggleList} href="/pedidos">
-          Pedidos
-        </Link>
-        
-      </li>
+   
+      
       <li><Link onClick={toggleList} href="/favorites">Favoritos</Link></li>
       <li><Link onClick={toggleList} href="/cart">Carrinho</Link></li>
     </ul>
