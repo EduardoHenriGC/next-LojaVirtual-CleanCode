@@ -7,14 +7,19 @@
 .Content{
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 .container h2{
     margin-bottom: 50px;
+    text-align: center;
 }
 
 .containerList{
     
-    width: 200px;
+    width: 250px;
+  margin-bottom: 20px;
 }
 
 .containerList h4{
@@ -28,8 +33,8 @@
 }
 
 .img{
-    width: 200px;
-    height: 190px;
+    width: 250px;
+    height: 230px;
 }
 .container_preco{
     display: flex;
@@ -40,7 +45,7 @@
 }
 .container_preco p{
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
     
 
 }

@@ -1,122 +1,180 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useSession } from "next-auth/react";
+import api from '@/data/api';
 
-//pega os item do carrinho do localstorage e se nao tiver nada retorna um array vazio.
-function getStoredCart() {
-  const storedCart = localStorage.getItem('cartItems');
-  return storedCart ? JSON.parse(storedCart) : [];
-}
 
-//remove um item do carrinho, e tras os restantes.. ** ele atualiza o carrinho trazendo os itens diferente do que foi excluido.
-function removeCartFromLocalStorage(updatedCart) {
-  localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-}
-
-//pega os item do carrinho do localstorage e se nao tiver nada retorna um array vazio.
-function getStoredFavorites() {
-  const storedFavorites = localStorage.getItem('favoriteItems');
-  return storedFavorites ? JSON.parse(storedFavorites) : [];
-}
-
-//remove um item do favoritos, e tras os restantes.. ** ele atualiza o favoritos trazendo os itens diferente do que foi excluido.
-function removeFavoriteFromLocalStorage(updatedFavorites) {
-  localStorage.setItem('favoriteItems', JSON.stringify(updatedFavorites));
+function setCartItemsToLocalStorage(updatedCart) {
+  localStorage.setItem("cartItems", JSON.stringify(updatedCart));
 }
 
 const ProductsContext = createContext();
 
-
-
 export function ProductsProvider({ children }) {
-  const [favoriteItems, setFavoriteItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [favoriteItems, setFavoriteItems] = useState([]);
   const [products, setProducts] = useState([]);
 
-//faz o fetch de todos os produtos e armazena no state "products"
-  useEffect(() => {
-    
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/teste");
-        const productsData = await res.json();
-        setProducts(productsData);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
+  const { data: session } = useSession();
 
+  //FUNCTION TO BRING ALL PRODUCTS
+  const fetchProducts = useCallback(async () => {
+    try {
+      const res = await api.get("/products"); // Use Axios to fetch products
+      setProducts(res.data); // Assuming the response data is an array
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  }, []);
+
+  useEffect(() => {
     fetchProducts();
-  }, []);
-  
-    useEffect(() => {
-    const storedFavorites = localStorage.getItem('favoriteItems');
-    if (storedFavorites) {
-      setFavoriteItems(JSON.parse(storedFavorites));
-    }
+  }, [fetchProducts]);
 
-    const storedCart = localStorage.getItem('cartItems');
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
-    }
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('favoriteItems', JSON.stringify(favoriteItems));
-  }, [favoriteItems]);
-
-  useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  useEffect(() => {
-    setCartItems(getStoredCart());
-  }, []);
-
-  useEffect(() => {
-    setFavoriteItems(getStoredFavorites());
-  }, []);
-
-  // função para dar like ou add aos favoritos// recebe como parametro ID, a variavel e a função do state.
-  const handleItemAction = (id, itemList, setItemList) => {
-    const item = products.find((product) => product.id === id);
-    if (item && !itemList.some((item) => item.id === id)) {
+    // function handle cart item
+    const handleItemAction = useCallback((id, itemList, setItemList) => {
+    const item = products.find((product) => product.idproduto === id);
+    if (item && !itemList.some((item) => item.idproduto === id)) {
       setItemList([...itemList, item]);
     }
-  };
-  
- const handleLikeClick = (id) => {
-    handleItemAction(id, favoriteItems, setFavoriteItems);
-  };
+  }, [products]);
 
-  const handleCartClick = (id) => {
+  const handleCartClick = useCallback((id) => {
     handleItemAction(id, cartItems, setCartItems);
-  };
-  
- //função para remover o item do carrinho e tambem do localstorage
+  }, [cartItems, handleItemAction]);
 
-  const handleRemoveCart = (id) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id);
+  //FUNCTION TO REMOVE ITEM FROM CART LOCALSTORAGE
+
+  const handleRemoveCart = useCallback((id) => {
+    const updatedCart = cartItems.filter((item) => item.idproduto !== id);
     setCartItems(updatedCart);
-    removeCartFromLocalStorage(updatedCart);
-  };
- 
-   //função para remover o item do favoritos e tambem do localstorage
+    setCartItemsToLocalStorage(updatedCart);
+  }, [cartItems]);
 
-  const handleRemoveFavorite = (id) => {
-    const updatedFavorites = favoriteItems.filter((item) => item.id !== id);
-    console.log(updatedFavorites)
-    setFavoriteItems(updatedFavorites);
-    removeFavoriteFromLocalStorage(updatedFavorites);
-  };
 
+  // Function to fetch data from API bookmarks without updating the state
+  const fetchFavoritesData = useCallback(async () => {
+    try {
+      if (!session) {
+        return [];
+      }
+
+      const userEmail = session.user.email;
+
+      
+
+      const res = await api.get(`favorites?q=${userEmail}`); // Use Axios to fetch favorites
+      return res.data; // Assuming the response data is an array
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+      return [];
+    }
+  }, [session]);
+
+// Function to fetch data from API bookmarks and update state
+const fetchFavorites = useCallback(async () => {
+  try {
+    if (!session) {
+      return;
+    }
+
+    const userEmail = session.user.email;
+
+    
+
+    const res = await api.get(`favorites?q=${userEmail}`); // Use Axios to fetch favorites
+    setFavoriteItems(res.data); // Assuming the response data is an array
+  } catch (error) {
+    console.error('Error fetching favorites:', error);
+  }
+}, [session]);
+
+// Effect that calls fetchFavorites function when session or fetchFavorites function changes
+useEffect(() => {
+  fetchFavorites();
+}, [session, fetchFavorites]);
+
+
+
+
+//FUNCTION TO REMOVE THE ITEM LOCALLY AND THEN REMOVE IT FROM THE DATABASE
+const handleFavClickApi = useCallback(async (idproduto, userEmail) => {
+  try {
+    //Check if the item is already in favorites
+    if (favoriteItems.some((item) => item.idproduto === idproduto)) {
+      console.log("The item is already in favorites.");
+      return;
+    }
+
+    // Continue logic to add item to favorites
+    const item = products.find((product) => product.idproduto === idproduto);
+
+    if (item) {
+      // Atualizar localmente antes de fazer uma solicitação
+      const updatedFavoriteItems = [...favoriteItems, item];
+      setFavoriteItems(updatedFavoriteItems);
+
+      // Update locally before making a request
+      await api.post("favorites", {
+        produtoid: idproduto,
+        usuarioid: userEmail,
+      });
+
+      // Update again after a successful reply
+      const updatedFavoritesData = await fetchFavoritesData();
+      setFavoriteItems(updatedFavoritesData);
+    } else {
+      console.log("Item não encontrado nos produtos.");
+    }
+  } catch (error) {
+    console.error('Erro ao adicionar favorito:', error);
+  }
+}, [session, favoriteItems, products, fetchFavoritesData]);
+
+
+const handleFavClick = useCallback((idproduto) => {
+    if (session) {
+      const userEmail = session.user.email;
+      handleFavClickApi(idproduto, userEmail); 
+    } else {
+      console.log("err")
+    }
+  }, [session, handleFavClickApi]);
+
+
+  //FUNCTION TO REMOVE AN ITEM FROM FAVORITES
+  const handleRemoveFav = useCallback(async (id) => {
+    try {
+      if (!session) {
+        return;
+      }
+     
+      const response = await api.delete(`favorites${id}`);
   
+      if (response.status === 204) {
+        console.log("Item excluído com sucesso");
+  
+        setFavoriteItems((prevFavoriteItems) =>
+          prevFavoriteItems.filter((item) => item.id !== id)
+        );
+      }
+    } catch (error) {
+      console.error('Erro ao remover favorito:', error);
+    }
+  }, [session]);
+
+  useEffect(() => {
+    handleRemoveFav();
+  }, [favoriteItems, handleRemoveFav]);
+
   const contextValue = {
     products,
     favoriteItems,
     cartItems,
     handleCartClick,
-    handleLikeClick,
+    handleFavClick,
     handleRemoveCart,
-    handleRemoveFavorite
+    handleRemoveFav
   };
 
   return <ProductsContext.Provider value={contextValue}>{children}</ProductsContext.Provider>;

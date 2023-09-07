@@ -7,19 +7,28 @@
 
 .content {
   display: flex;
-    gap: 15px;
+    gap: 35px;
+    flex-wrap: wrap;
+    
+    justify-content: center;
+    align-items: center;
+    
+    
   }
   .container h2{
     margin-bottom: 50px;
+    text-align: center;
 }
 
 .containerList{
     
-  width: 200px;
+  width: 250px;
+  margin-bottom: 20px;
 }
 
 .containerList h4{
   margin-bottom: 15px;
+  text-align: center;
 }
 .containerList img{
 
@@ -29,8 +38,8 @@
 }
 
 .img{
-  width: 200px;
-  height: 190px;
+  width: 250px;
+  height: 230px;
 }
 
 .container_preco{
@@ -39,6 +48,7 @@
   padding: 10px;
   justify-content: space-around;
   
+  
 }
   .jogoslist h4 {
     margin-bottom: 1.4rem;
@@ -46,6 +56,7 @@
   .title {
     margin: 60px auto;
     text-transform: uppercase;
+    
   }
   .container_preco p{
     font-weight: 500;

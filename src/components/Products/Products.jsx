@@ -7,9 +7,9 @@ import Link from 'next/link';
 
 
 function Products({ 
-   id,
-   nome, 
-   imgurl,
+  idproduto,
+  nmproduto, 
+  urlimg,
    preco, 
    descricao, 
  }) {
@@ -18,29 +18,29 @@ function Products({
     
     
     handleCartClick,
-    handleLikeClick,
+    handleFavClick,
   } = useProductsContext();
   
   
   return (
    
-    <li key={id}>
-      <h4>{nome}</h4>
-      <img src={imgurl} alt={nome} height="300px" width="300px" />
+    <li key={idproduto}>
+      <h4>{nmproduto}</h4>
+      <img src={urlimg} alt={nmproduto} height="300px" width="300px" />
       <div className={styles.container_preco}>
         <p>${preco}</p>
         <div>
           <BsFillCartCheckFill
             className={styles.icons_cart}
-            onClick={() => handleCartClick(id)}
+            onClick={() => handleCartClick(idproduto)}
           />
           <FcLike
             className={styles.icons_like}
-            onClick={() => handleLikeClick(id)}
+            onClick={() => handleFavClick(idproduto)}
           />
         </div>
       </div>
-      <Link href={`/produtos/${id}`} className={styles.link}>
+      <Link href={`/produtos/${idproduto}`} className={styles.link}>
   Ver mais..
 </Link>
 

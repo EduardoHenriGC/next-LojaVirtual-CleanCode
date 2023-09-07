@@ -17,12 +17,12 @@ function ProductsList() {
       <div>
         <h2 className={styles.title}>Lista de produtos</h2>
         <ul className={styles.jogoslist}>
-          {products.map(({ id, nome, imgurl, preco,descricao }) => (
+          {products.map(({ idproduto, nmproduto, urlimg, preco,descricao }) => (
             <Products
-              key={id}
-              id={id}
-              nome={nome}
-              imgurl={imgurl}
+              key={idproduto}
+              idproduto={idproduto}
+              nmproduto={nmproduto}
+              urlimg={urlimg}
               preco={preco}
               descricao={descricao}
              

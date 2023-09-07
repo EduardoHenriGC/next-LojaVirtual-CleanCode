@@ -15,30 +15,30 @@ export default function CartItem({handleAmountMore, handleAmountLess, totalValue
       ) : (
         <div>
           <ul className={styles.Content}>
-            {cartItems.map(({ id, nome, imgurl, preco }) => (
-              <li className={styles.containerList} key={id}>
-                <h4>{nome}</h4>
+            {cartItems.map(({ idproduto, nmproduto, urlimg, preco }) => (
+              <li className={styles.containerList} key={idproduto}>
+                <h4>{nmproduto}</h4>
                 <div className={styles.img}>
-                <img  src={imgurl} alt={nome}/>
+                <img  src={urlimg} alt={nmproduto}/>
                 </div>
                 <div className={styles.container_preco}>
                 <p>
                   R${preco} 
                   </p>
                   <div>
-                  <AiOutlineMinus className={styles.btnhandle}  onClick={() => handleAmountLess(id)}>diminuir</AiOutlineMinus>
-                  <span>{quantidades[id]}</span>
-                  <AiOutlinePlus className={styles.btnhandle}  onClick={() => handleAmountMore(id)}>aumentar</AiOutlinePlus>
+                  <AiOutlineMinus className={styles.btnhandle}  onClick={() => handleAmountLess(idproduto)}>diminuir</AiOutlineMinus>
+                  <span>{quantidades[idproduto]}</span>
+                  <AiOutlinePlus className={styles.btnhandle}  onClick={() => handleAmountMore(idproduto)}>aumentar</AiOutlinePlus>
                 </div>
               <AiFillDelete
                   className={styles.removeButton}
-                  onClick={() => handleRemoveCart(id)}
+                  onClick={() => handleRemoveCart(idproduto)}
                 />
                   </div>
               </li>
             ))}
           </ul>
-          <p>Total: ${totalValue}</p>
+          <p>Total: ${totalValue.toFixed(2)}</p>
         </div>
       )}
     </div>

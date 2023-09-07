@@ -7,28 +7,29 @@ import {BsFillCartCheckFill} from "react-icons/bs"
 
 export default function FavoritesItem() {
   
-const  {handleRemoveFavorite, favoriteItems,handleCartClick} = useProductsContext();
+const  {favoriteItems,handleCartClick,handleRemoveFav} = useProductsContext();
   return (
     <div className={styles.container}>
       <h2>Itens Favoritos</h2>
-      {favoriteItems.length === 0 ? (
+      {favoriteItems.length  === 0 ? (
         <p>Nenhum item favorito ainda.</p>
       ) : (
         <ul className={styles.content}>
           {favoriteItems.map(({ 
-            id, 
-            nome, 
-            imgurl, 
+            id,
+            idproduto, 
+            nmproduto, 
+            urlimg, 
             preco }) => (
             <li className={styles.containerList} key={id}>
-              <h4>{nome}</h4>
-              <div className={styles.img}><img src={imgurl} alt={nome} height="150px" width="150px" /></div>
+              <h4>{nmproduto}</h4>
+              <div className={styles.img}><img src={urlimg} alt={nmproduto} height="150px" width="150px" /></div>
              <div className={styles.container_preco}> <p>${preco}</p>
               <div className={styles.containerhandle}>
-                <BsFillCartCheckFill className={styles.cart} onClick={()=> handleCartClick(id)} />
+                <BsFillCartCheckFill className={styles.cart} onClick={()=> handleCartClick(idproduto)} />
               <AiFillDelete
                 className={styles.removeButton}
-                onClick={() => handleRemoveFavorite(id)}
+                onClick={() => handleRemoveFav(id)}
               />
               </div>
                 
@@ -41,3 +42,5 @@ const  {handleRemoveFavorite, favoriteItems,handleCartClick} = useProductsContex
     </div>
   );
 }
+
+

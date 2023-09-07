@@ -7,7 +7,7 @@ export default function CartHooks() {
 
   // Inicializar o estado quantidades com 1 para cada item no carrinho
   const initialQuantities = cartItems.reduce((quantities, item) => {
-    quantities[item.id] = 1;
+    quantities[item.idproduto] = 1;
     return quantities;
   }, {});
 
@@ -18,7 +18,7 @@ export default function CartHooks() {
   useEffect(() => {
     let newTotalValue = 0;
     cartItems.forEach((item) => {
-      newTotalValue += item.preco * (quantidades[item.id] || 0);
+      newTotalValue += item.preco * (quantidades[item.idproduto] || 0);
     });
     setTotalValue(newTotalValue);
   }, [quantidades, cartItems]);
